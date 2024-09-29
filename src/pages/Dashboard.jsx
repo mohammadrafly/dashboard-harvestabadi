@@ -3,8 +3,6 @@ import { FiMenu, FiX } from 'react-icons/fi';
 import { FaUsers, FaProjectDiagram } from 'react-icons/fa';
 import { MdOutlineArticle } from 'react-icons/md';
 import Sidebar from '../layouts/Slidebar';
-import Card from '../components/Card';
-import Table from '../components/Table';
 
 const DashboardLayout = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -26,19 +24,6 @@ const DashboardLayout = () => {
         setIsOpen(!isOpen);
     };
 
-    const columns = [
-        { Header: 'ID', accessor: 'id' },
-        { Header: 'Name', accessor: 'name' },
-        { Header: 'Email', accessor: 'email' },
-        { Header: 'Role', accessor: 'role' },
-    ];
-
-    const data = [
-        { id: 1, name: 'Lorem', email: 'lorem@example.com', role: 'Admin' },
-        { id: 2, name: 'Ipsoem Smith', email: 'ipsoem@example.com', role: 'Editor' },
-        { id: 3, name: 'Freya', email: 'freya@example.com', role: 'User' },
-    ];
-
     return (
         <div className="flex h-screen">
             <Sidebar isOpen={isOpen} />
@@ -54,26 +39,31 @@ const DashboardLayout = () => {
                 </header>
 
                 <main className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                        <Card 
-                            title="Users" 
-                            count={150} 
-                            icon={<FaUsers />} 
-                        />
-                        <Card 
-                            title="Articles" 
-                            count={30} 
-                            icon={<MdOutlineArticle />} 
-                        />
-                        <Card 
-                            title="Projects" 
-                            count={12} 
-                            icon={<FaProjectDiagram />} 
-                        />
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                            <div>
+                                <h2 className="text-lg font-bold">Total Users</h2>
+                                <p className="text-2xl">150</p>
+                            </div>
+                            <FaUsers className="text-4xl text-blue-500" />
+                        </div>
 
-                    {/* Tabel sama fitur Search, Sort, dan Pagination */}
-                    <Table data={data} columns={columns} />
+                        <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                            <div>
+                                <h2 className="text-lg font-bold">Total Articles</h2>
+                                <p className="text-2xl">30</p>
+                            </div>
+                            <MdOutlineArticle className="text-4xl text-green-500" />
+                        </div>
+
+                        <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                            <div>
+                                <h2 className="text-lg font-bold">Total Projects</h2>
+                                <p className="text-2xl">12</p>
+                            </div>
+                            <FaProjectDiagram className="text-4xl text-purple-500" />
+                        </div>
+                    </div>
                 </main>
             </div>
         </div>
