@@ -1,16 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BiHomeAlt } from 'react-icons/bi';
 import { MdOutlineArticle } from 'react-icons/md';
 import { TbCategory } from 'react-icons/tb';
 import { FaRegUser } from 'react-icons/fa';
 import { CgWebsite } from 'react-icons/cg';
 import { IoIosArrowForward } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
-import ProfileIcon from '../components/ProfileIcon'; // Import the ProfileIcon
+import ProfileIcon from '../components/ProfileIcon';
 
-const Sidebar = ({ isOpen }) => {
-    const navigate = useNavigate();
-
+const Slidebar = ({ isOpen }) => {
     return (
         <div
             className={`bg-[#00C2FF] text-white fixed top-0 h-full transition-all duration-300 ${isOpen ? 'w-64 md:w-80' : 'w-0'}`}
@@ -22,25 +20,25 @@ const Sidebar = ({ isOpen }) => {
                 </h1> 
             </div>
             <ul className="mt-7 cursor-pointer text-lg">
-                <li className="py-2 px-4 hover:text-yellow-400 flex items-center" onClick={() => navigate('/dashboard')}>
+                <li className="py-2 px-4 hover:text-yellow-400 flex items-center">
                     <BiHomeAlt />
-                    <span className="ml-4">Dashboard</span>
+                    <Link to="/dashboard" className="ml-4">Dashboard</Link>
                 </li>
-                <li className="py-2 px-4 hover:text-yellow-400 flex items-center" onClick={() => navigate('/blog')}>
+                <li className="py-2 px-4 hover:text-yellow-400 flex items-center">
                     <MdOutlineArticle />
-                    <span className="ml-4">Blog</span>
+                    <Link to="/blog" className="ml-4">Blog</Link>
                 </li>
                 <li className="py-2 px-4 hover:text-yellow-400 flex items-center">
                     <TbCategory />
-                    <span className="ml-4">Category</span>
+                    <Link className="ml-4">Category</Link>
                 </li>
-                <li className="py-2 px-4 hover:text-yellow-400 flex items-center" onClick={() => navigate('/users')}>
+                <li className="py-2 px-4 hover:text-yellow-400 flex items-center">
                     <FaRegUser />
-                    <span className="ml-4">User</span>
+                    <Link to="/users" className="ml-4">User</Link>
                 </li>
                 <li className="py-2 px-4 hover:text-yellow-400 flex items-center">
                     <CgWebsite />
-                    <span className="ml-4 pr-12">Landing Page</span>
+                    <Link className="ml-4 pr-12">Landing Page</Link>
                     <IoIosArrowForward />
                 </li>
             </ul>
@@ -52,4 +50,4 @@ const Sidebar = ({ isOpen }) => {
     );
 };
 
-export default Sidebar;
+export default Slidebar;

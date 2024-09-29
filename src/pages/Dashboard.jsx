@@ -5,12 +5,19 @@ import { MdOutlineArticle } from 'react-icons/md';
 import Sidebar from '../layouts/Slidebar';
 
 const DashboardLayout = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    // Check localStorage for the sidebar state, default to false
+    const [isOpen, setIsOpen] = useState(() => {
+        const storedState = localStorage.getItem('sidebarOpen');
+        return storedState ? JSON.parse(storedState) : false;
+    });
 
     useEffect(() => {
+        // Automatically open sidebar on larger screens
         const handleResize = () => {
             if (window.innerWidth >= 768) {
                 setIsOpen(true);
+            } else {
+                setIsOpen(false);
             }
         };
 
@@ -19,6 +26,10 @@ const DashboardLayout = () => {
 
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem('sidebarOpen', JSON.stringify(isOpen));
+    }, [isOpen]);
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);

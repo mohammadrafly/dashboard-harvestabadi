@@ -5,10 +5,6 @@ import DashboardLayout from './pages/Dashboard';
 import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
 
-const Dashboard = () => {
-  return <h1 className="text-3xl font-bold">Dashboard Content</h1>;
-};
-
 const App = () => {
   return (
     <Router>
@@ -17,12 +13,11 @@ const App = () => {
         <Route path="/" element={<Login />} />
 
         {/* Dashboard Route with Sidebar */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
-        </Route>
+        <Route path="/dashboard" element={<DashboardLayout />} />
 
         {/* Blog Route */}
         <Route path="/blog" element={<BlogPage />} />
+
         {/* Users Route */}
         <Route path="/users" element={<UserPage />} />
       </Routes>

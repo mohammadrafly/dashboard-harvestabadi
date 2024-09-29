@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Slidebar from '../layouts/Slidebar';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { FiMenu, FiPlus, FiX } from 'react-icons/fi';
 import Table from '../components/Table';
 
 const UserPage = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(() => {
+        const storedState = localStorage.getItem('sidebarOpenUser');
+        return storedState ? JSON.parse(storedState) : false;
+    });
 
     useEffect(() => {
         const handleResize = () => {
@@ -20,6 +23,10 @@ const UserPage = () => {
 
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem('sidebarOpenUser', JSON.stringify(isOpen));
+    }, [isOpen]);
 
     const toggleSlidebar = () => {
         setIsOpen(!isOpen);
@@ -59,7 +66,11 @@ const UserPage = () => {
                 <main className="p-4 md:p-6">
                     <h1 className="text-2xl md:text-3xl font-bold mb-4">User List</h1>
 
-                    {/* Insert Table Component */}
+                    <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 flex items-center">
+                        <FiPlus className="mr-2" />
+                        Add User
+                    </button>
+
                     <div className="overflow-x-auto">
                         <Table data={users} columns={columns} />
                     </div>

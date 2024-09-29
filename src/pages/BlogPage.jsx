@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Slidebar from '../layouts/Slidebar';
-import { FiMenu, FiX, FiPlus } from 'react-icons/fi'; // Import FiPlus icon
+import { FiMenu, FiX, FiPlus } from 'react-icons/fi';
 import Table from '../components/Table';
 
 const BlogPage = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(() => {
+        const storedState = localStorage.getItem('sidebarOpenBlog');
+        return storedState ? JSON.parse(storedState) : false;
+    });
 
     useEffect(() => {
         const handleResize = () => {
@@ -21,13 +24,20 @@ const BlogPage = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        localStorage.setItem('sidebarOpenBlog', JSON.stringify(isOpen));
+    }, [isOpen]);
+
     const toggleSlidebar = () => {
         setIsOpen(!isOpen);
     };
 
     const articles = [
         { id: 1, title: 'gadis tomboi yang semangatnya meletup-letup', author: 'Zee', date: 'Sept 28, 2024' },
-        { id: 2, title: 'terangi harimu dengan senyum karamelku', author: 'Freya', date: 'Sept 27, 2024' },
+        { id: 2, title: 'gadis koleris yang suka berimajinasi, terangi harimu dengan senyum karamelku', author: 'Freya', date: 'Sept 27, 2024' },
+        { id: 3, title: 'bagai kucing kalem, tapi selalu memikat hati kamu', author: 'Adel', date: 'Sept 29, 2024' },
+        { id: 4, title: 'semanis coklat, selembut sutra', author: 'Shani', date: 'Sept 30, 2024' },
+        { id: 5, title: 'suka menari dan akan berusaha menjadi energimu', author: 'Jessica', date: 'Sept 26, 2024' },
     ];
 
     const columns = [
