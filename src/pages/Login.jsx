@@ -75,7 +75,8 @@ const Login = () => {
           </form>
         </div>
 
-        <div className="w-1/2 bg-cover bg-center bg-[#00C2FF]" style={{ backgroundImage: 'url(/path/to/your/image.jpg)' }}>
+        <div className="w-1/2 md:flex items-center justify-center bg-cover bg-center bg-[#00C2FF] hidden">
+          <img src="images/loginimg.png" alt=""></img>
         </div>
       </div>
     </AuthLayout>
