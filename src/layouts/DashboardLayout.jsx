@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react';
 import Sidebar from './partials/Sidebar';
 import { FiMenu, FiX } from 'react-icons/fi';
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = ({ children, title }) => {
     const [isOpen, setIsOpen] = useState(() => {
         const storedState = localStorage.getItem('sidebarOpen');
         return storedState ? JSON.parse(storedState) : false;
@@ -41,7 +41,7 @@ const DashboardLayout = ({ children }) => {
                 <button onClick={toggleSidebar} className="text-3xl focus:outline-none mr-4">
                     {isOpen ? <FiX /> : <FiMenu />}
                 </button>
-                <h1 className="text-xl font-bold">Dashboard</h1>
+                <h1 className="text-xl font-bold">{title}</h1>
             </div>
         </header>
         {children}

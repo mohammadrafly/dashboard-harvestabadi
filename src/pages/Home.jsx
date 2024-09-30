@@ -6,7 +6,7 @@ import DashboardLayout from '../layouts/DashboardLayout';
 const Home = () => {
 
     return (
-        <DashboardLayout>
+        <DashboardLayout title={'Home'}>
             <main className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {[

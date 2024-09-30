@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
@@ -9,17 +9,13 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Login Route */}
         <Route path="/" element={<Login />} />
-
-        {/* Dashboard Route with Sidebar */}
-        <Route path="/home" element={<Home />} />
-
-        {/* Blog Route */}
-        <Route path="/blog" element={<BlogPage />} />
-
-        {/* Users Route */}
-        <Route path="/users" element={<UserPage />} />
+        <Route path="/dashboard">
+          <Route index element={<Navigate to="home" />} />
+          <Route path="home" element={<Home />} />
+          <Route path="blog" element={<BlogPage />} />
+          <Route path="users" element={<UserPage />} />
+        </Route>
       </Routes>
     </Router>
   );

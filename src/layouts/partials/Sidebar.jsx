@@ -19,19 +19,19 @@ const Sidebar = ({ isOpen }) => {
             </Link>
             </div>
             <ul className="mt-7 cursor-pointer text-lg">
-                <Link to="/home">
+                <Link to="/dashboard/home">
                     <li className="flex items-center py-2 px-4 hover:text-yellow-400">
                         <BiHomeAlt className="mr-4"/>
                         Dashboard
                     </li>
                 </Link>
-                <Link to="/blog" >
+                <Link to="/dashboard/blog" >
                     <li className="flex items-center py-2 px-4 hover:text-yellow-400">
                         <MdOutlineArticle className="mr-4"/>
                         Blog
                     </li>
                 </Link>
-                <Link to="/users" >
+                <Link to="/dashboard/users" >
                     <li className="flex items-center py-2 px-4 hover:text-yellow-400">
                         <FaRegUser className="mr-4"/>
                         User
@@ -40,7 +40,7 @@ const Sidebar = ({ isOpen }) => {
             </ul>
 
             <div className="absolute bottom-0 left-0 p-5 w-full">
-                <ProfileIcon />
+                <ProfileIcon email={'admin@gmail.com'} />
             </div>
         </div>
     );

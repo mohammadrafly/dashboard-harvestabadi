@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { MdLogout } from 'react-icons/md';
 
-const ProfileIcon = () => {
+const ProfileIcon = ({ email }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -29,10 +29,10 @@ const ProfileIcon = () => {
     }, [dropdownOpen]);
 
     return (
-        <div className="relative inline-block w-full text-center bg-white px-4 py-3 rounded-lg" ref={dropdownRef}>
+        <div className="relative inline-block w-full text-center bg-white px-4 py-3 rounded-lg font-semibold" ref={dropdownRef}>
             <button onClick={toggleDropdown} className="flex items-center w-full text-2xl text-black hover:text-[#00C2FF]">
                 <AiOutlineUser className="mr-3"/>
-                <span className="block text-lg">Profile</span>
+                <span className="block text-lg">{email}</span>
             </button>
 
             {dropdownOpen && (
