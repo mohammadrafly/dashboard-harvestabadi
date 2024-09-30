@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
-import DashboardLayout from './pages/Dashboard';
 import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
+import Home from './pages/Home';
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
         <Route path="/" element={<Login />} />
 
         {/* Dashboard Route with Sidebar */}
-        <Route path="/dashboard" element={<DashboardLayout />} />
+        <Route path="/home" element={<Home />} />
 
         {/* Blog Route */}
         <Route path="/blog" element={<BlogPage />} />
