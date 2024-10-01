@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = `http://localhost:8000/api/v1/dashboard/`;
+//const API_URL = 'http://localhost:8000/api/v1/dashboard/';
+const API_URL = 'https://api.harvestabadi.com/api/v1/dashboard';
 
 export const fetchProjects = async (token) => {
     try {
