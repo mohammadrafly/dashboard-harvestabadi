@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { verifyToken } from '../services/authService';
+import Loading from './Loading';
 
 const PrivateRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -34,7 +35,7 @@ const PrivateRoute = () => {
   }, [token]);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>;
+    return <Loading></Loading>;
   }
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" state={{ error: errorMessage }} />;

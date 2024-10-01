@@ -11,7 +11,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState(location.state?.error || '');
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(false); // Loading state for login
+  const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(3000);
 
   useEffect(() => {
@@ -34,19 +34,19 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when login starts
+    setLoading(true);
     try {
       const response = await login(email, password);
       localStorage.setItem('token', response.data.token);
-      setSuccessMessage('Login successful! Redirecting to dashboard...'); // Set success message
+      setSuccessMessage('Login successful! Redirecting to dashboard...');
       setTimeout(() => {
-        setIsLoggedIn(true); // Redirect after showing success message
-      }, 2000); // Wait 2 seconds before redirecting
+        setIsLoggedIn(true);
+      }, 2000);
     } catch (error) {
       setErrorMessage('Invalid credentials');
       setCountdown(3000);
     } finally {
-      setLoading(false); // Set loading to false once login is complete
+      setLoading(false);
     }
   };
 
@@ -115,9 +115,9 @@ const Login = () => {
             <button
               type="submit"
               className="w-full py-2 px-4 bg-[#00C2FF] text-white font-bold rounded-md hover:bg-[#3caacc] transition"
-              disabled={loading} // Disable button during loading
+              disabled={loading}
             >
-              {loading ? 'Signing In...' : 'Sign In'} {/* Show loading message */}
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
         </div>

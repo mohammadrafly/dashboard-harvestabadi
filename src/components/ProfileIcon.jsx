@@ -7,7 +7,7 @@ import { logout, verifyToken } from '../services/authService';
 const ProfileIcon = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [userData, setUserData] = useState(null);
-    const [logoutMessage, setLogoutMessage] = useState(''); // State for logout success message
+    const [logoutMessage, setLogoutMessage] = useState('');
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
 
@@ -49,15 +49,19 @@ const ProfileIcon = () => {
         };
     }, [dropdownOpen]);
 
+    const handleProfileClick = () => {
+        navigate(`/dashboard/profile/${userData.email}`);
+    };
+
     const handleLogout = async () => {
-        if (window.confirm('Are you sure you want to log out?')) {  // Confirmation dialog
+        if (window.confirm('Are you sure you want to log out?')) {
             try {
                 await logout(token);
                 localStorage.removeItem('token');
-                setLogoutMessage('Logout successful!'); // Set success message
+                setLogoutMessage('Logout successful!');
                 setTimeout(() => {
                     navigate('/login');
-                }, 2000); // Redirect after 2 seconds
+                }, 2000);
             } catch (error) {
                 console.error('Logout failed', error);
             }
@@ -77,7 +81,7 @@ const ProfileIcon = () => {
 
             {dropdownOpen && (
                 <div className="absolute left-0 bottom-full mb-1 w-full bg-white text-black rounded shadow-lg z-10">
-                    <div className="px-4 py-2 cursor-pointer flex items-center hover:bg-slate-200">
+                    <div className="px-4 py-2 cursor-pointer flex items-center hover:bg-slate-200" onClick={handleProfileClick}>
                         <AiOutlineUser className="mr-2" />
                         <p>Profile</p>
                     </div>

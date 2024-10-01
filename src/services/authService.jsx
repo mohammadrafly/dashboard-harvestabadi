@@ -27,3 +27,22 @@ export const logout = async (token) => {
   });
   return response.data;
 };
+
+
+export const updateUserProfile = async (token, userData, email) => {
+  const response = await axios.put(`${API_URL}dashboard/profile/${email}/update`, userData, {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+  });
+  return response.data;
+};
+
+export const updateUserPassword = async (token, { currentPassword, newPassword }, email) => {
+  const response = await axios.put(`${API_URL}dashboard/profile/${email}/update/password`, { current_password: currentPassword, new_password: newPassword }, {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+  });
+  return response.data;
+};

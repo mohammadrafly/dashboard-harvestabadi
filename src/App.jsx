@@ -5,6 +5,7 @@ import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
 import Home from './pages/Home';
 import PrivateRoute from './components/PrivateRoute';
+import Profile from './pages/Profile';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="home" element={<Home />} />
           <Route path="blog" element={<BlogPage />} />
           <Route path="users" element={<UserPage />} />
+          <Route path="profile/:email" element={<Profile />} />
         </Route>
       </Routes>
     </Router>
