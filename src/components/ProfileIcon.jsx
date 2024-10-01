@@ -69,7 +69,7 @@ const ProfileIcon = () => {
     };
 
     return (
-        <div className="relative inline-block w-full text-center bg-white px-4 py-3 rounded-lg font-semibold" ref={dropdownRef}>
+        <div className="relative inline-block w-full text-center bg-white px-3 py-2 rounded-lg font-semibold" ref={dropdownRef}>
             <button onClick={toggleDropdown} className="flex items-center w-full text-2xl text-black hover:text-[#00C2FF]">
                 <AiOutlineUser className="mr-3"/>
                 <span className="block text-lg">{userData?.email || 'Loading...'}</span>

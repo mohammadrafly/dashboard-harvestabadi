@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BiHomeAlt } from 'react-icons/bi';
-import { MdOutlineArticle } from 'react-icons/md';
-import { FaRegUser } from 'react-icons/fa';
+import { MdOutlineArticle, MdOutlineDesignServices } from 'react-icons/md';
+import { FaProjectDiagram } from 'react-icons/fa';
 import ProfileIcon from '../../components/ProfileIcon';
 
 const Sidebar = ({ isOpen }) => {
@@ -25,16 +25,22 @@ const Sidebar = ({ isOpen }) => {
                         Dashboard
                     </li>
                 </Link>
-                <Link to="/dashboard/blog" >
+                <Link to="/dashboard/blog">
                     <li className="flex items-center py-2 px-4 hover:text-yellow-400">
                         <MdOutlineArticle className="mr-4"/>
                         Blog
                     </li>
                 </Link>
-                <Link to="/dashboard/users" >
+                <Link to="/dashboard/projects">
                     <li className="flex items-center py-2 px-4 hover:text-yellow-400">
-                        <FaRegUser className="mr-4"/>
-                        User
+                        <FaProjectDiagram className="mr-4"/>
+                        Projects
+                    </li>
+                </Link>
+                <Link to="/dashboard/designs">
+                    <li className="flex items-center py-2 px-4 hover:text-yellow-400">
+                        <MdOutlineDesignServices className="mr-4"/>
+                        Design Inspiration
                     </li>
                 </Link>
             </ul>

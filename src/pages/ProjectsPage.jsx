@@ -2,83 +2,93 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import Table from '../components/Table';
 import DashboardLayout from '../layouts/DashboardLayout';
-import { fetchArticles, deleteArticle } from '../services/postService';
+import { fetchProjects, deleteProject } from '../services/projectService';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-const BlogPage = () => {
-    const [articles, setArticles] = useState([]);
+const ProjectsPage = () => {
+    const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
-    const getArticles = useCallback(async () => {
+    const getProjects = useCallback(async () => {
         try {
-            const response = await fetchArticles(token);
+            const response = await fetchProjects(token);
             if (response.status === 'success' && Array.isArray(response.data)) {
-                setArticles(response.data);
+                setProjects(response.data);
             } else {
                 throw new Error('Unexpected response structure');
             }
         } catch (error) {
-            console.error('Failed to fetch articles:', error);
-            setError('Failed to fetch articles. Please try again later.');
+            console.error('Failed to fetch projects:', error);
+            setError('Failed to fetch projects. Please try again later.');
         } finally {
             setLoading(false);
         }
     }, [token]);
 
     useEffect(() => {
-        getArticles();
-    }, [getArticles]);
+        getProjects();
+    }, [getProjects]);
 
-    const handleEdit = (article) => {
-        navigate(`/dashboard/blog/edit/${article.id}`, { state: { article } });
+    const handleEdit = (project) => {
+        navigate(`/dashboard/projects/edit/${project.id}`, { state: { project } });
     };
 
-    const handleDelete = async (articleId) => {
-        if (window.confirm('Are you sure you want to delete this article?')) {
+    const handleDelete = async (projectId) => {
+        if (window.confirm('Are you sure you want to delete this project?')) {
             try {
-                await deleteArticle(articleId, token);
-                setArticles((prevArticles) => prevArticles.filter((article) => article.id !== articleId));
-                setSuccessMessage('Article deleted successfully!');
+                await deleteProject(projectId, token);
+                setProjects((prevProjects) => prevProjects.filter((project) => project.id !== projectId));
+                setSuccessMessage('Project deleted successfully!');
             } catch (error) {
-                console.error('Failed to delete article:', error);
-                setError('Failed to delete article. Please try again later.');
+                console.error('Failed to delete project:', error);
+                setError('Failed to delete project. Please try again later.');
             }
         }
     };
 
     const columns = [
         { Header: 'ID', accessor: 'id' },
-        { Header: 'Title', accessor: 'title' },
+        { Header: 'Slug', accessor: 'slug' },
         {
-            Header: 'Author',
-            accessor: (row) => (row.author ? row.author.name : 'Unknown'),
+            Header: 'Image',
+            accessor: 'image',
+            Cell: ({ value }) => {
+                const imageUrl = `http://localhost:8000/storage/images/${value}`;
+                return <img src={imageUrl} alt="project" className="w-16 h-16 object-cover" />;
+            },
+        },
+        { Header: 'Link', accessor: 'link' },
+        {
+            Header: 'Content',
+            accessor: 'content',
+            Cell: ({ value }) => <p>{value.length > 100 ? `${value.slice(0, 100)}...` : value}</p>
         },
         {
-            Header: 'Date',
+            Header: 'Created At',
             accessor: (row) => moment(row.created_at).format('DD, MMM YYYY'),
         },
     ];
 
     return (
-        <DashboardLayout title={'Blog'}>
+        <DashboardLayout title={'Projects'}>
             <main className="p-4 md:p-6">
-                <h1 className="text-2xl md:text-3xl font-bold mb-4">Articles</h1>
+                <h1 className="text-2xl md:text-3xl font-bold mb-4">Projects</h1>
 
                 <button
-                    onClick={() => navigate('/dashboard/blog/add')}
+                    onClick={() => navigate('/dashboard/projects/add')}
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 flex items-center"
                 >
                     <FiPlus className="mr-2" />
-                    Add Article
+                    Add Project
                 </button>
 
                 {loading ? (
-                    <p>Loading articles...</p>
+                    <p>Loading projects...</p>
                 ) : error ? (
                     <p className="text-red-500">{error}</p>
                 ) : (
@@ -87,7 +97,7 @@ const BlogPage = () => {
                             <p className="text-green-500 mb-4">{successMessage}</p>
                         )}
                         <Table
-                            data={articles}
+                            data={projects}
                             columns={columns}
                             onEdit={handleEdit}
                             onDelete={handleDelete}
@@ -99,4 +109,4 @@ const BlogPage = () => {
     );
 };
 
-export default BlogPage;
+export default ProjectsPage;

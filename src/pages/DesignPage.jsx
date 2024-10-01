@@ -2,83 +2,79 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import Table from '../components/Table';
 import DashboardLayout from '../layouts/DashboardLayout';
-import { fetchArticles, deleteArticle } from '../services/postService';
+import { fetchDesigns, deleteDesign } from '../services/designService';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-const BlogPage = () => {
-    const [articles, setArticles] = useState([]);
+const DesignsPage = () => {
+    const [designs, setDesigns] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
-    const getArticles = useCallback(async () => {
+    const getDesigns = useCallback(async () => {
         try {
-            const response = await fetchArticles(token);
+            const response = await fetchDesigns(token);
             if (response.status === 'success' && Array.isArray(response.data)) {
-                setArticles(response.data);
+                setDesigns(response.data);
             } else {
                 throw new Error('Unexpected response structure');
             }
         } catch (error) {
-            console.error('Failed to fetch articles:', error);
-            setError('Failed to fetch articles. Please try again later.');
+            console.error('Failed to fetch designs:', error);
+            setError('Failed to fetch designs. Please try again later.');
         } finally {
             setLoading(false);
         }
     }, [token]);
 
     useEffect(() => {
-        getArticles();
-    }, [getArticles]);
+        getDesigns();
+    }, [getDesigns]);
 
-    const handleEdit = (article) => {
-        navigate(`/dashboard/blog/edit/${article.id}`, { state: { article } });
+    const handleEdit = (design) => {
+        navigate(`/dashboard/designs/edit/${design.id}`, { state: { design } });
     };
 
-    const handleDelete = async (articleId) => {
-        if (window.confirm('Are you sure you want to delete this article?')) {
+    const handleDelete = async (designId) => {
+        if (window.confirm('Are you sure you want to delete this design?')) {
             try {
-                await deleteArticle(articleId, token);
-                setArticles((prevArticles) => prevArticles.filter((article) => article.id !== articleId));
-                setSuccessMessage('Article deleted successfully!');
+                await deleteDesign(designId, token);
+                setDesigns((prevDesigns) => prevDesigns.filter((design) => design.id !== designId));
+                setSuccessMessage('Design deleted successfully!');
             } catch (error) {
-                console.error('Failed to delete article:', error);
-                setError('Failed to delete article. Please try again later.');
+                console.error('Failed to delete design:', error);
+                setError('Failed to delete design. Please try again later.');
             }
         }
     };
 
     const columns = [
         { Header: 'ID', accessor: 'id' },
-        { Header: 'Title', accessor: 'title' },
+        { Header: 'Link', accessor: 'link' },
         {
-            Header: 'Author',
-            accessor: (row) => (row.author ? row.author.name : 'Unknown'),
-        },
-        {
-            Header: 'Date',
+            Header: 'Created At',
             accessor: (row) => moment(row.created_at).format('DD, MMM YYYY'),
         },
     ];
 
     return (
-        <DashboardLayout title={'Blog'}>
+        <DashboardLayout title={'Designs'}>
             <main className="p-4 md:p-6">
-                <h1 className="text-2xl md:text-3xl font-bold mb-4">Articles</h1>
+                <h1 className="text-2xl md:text-3xl font-bold mb-4">Designs</h1>
 
                 <button
-                    onClick={() => navigate('/dashboard/blog/add')}
+                    onClick={() => navigate('/dashboard/designs/add')}
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 flex items-center"
                 >
                     <FiPlus className="mr-2" />
-                    Add Article
+                    Add Design
                 </button>
 
                 {loading ? (
-                    <p>Loading articles...</p>
+                    <p>Loading designs...</p>
                 ) : error ? (
                     <p className="text-red-500">{error}</p>
                 ) : (
@@ -87,7 +83,7 @@ const BlogPage = () => {
                             <p className="text-green-500 mb-4">{successMessage}</p>
                         )}
                         <Table
-                            data={articles}
+                            data={designs}
                             columns={columns}
                             onEdit={handleEdit}
                             onDelete={handleDelete}
@@ -99,4 +95,4 @@ const BlogPage = () => {
     );
 };
 
-export default BlogPage;
+export default DesignsPage;

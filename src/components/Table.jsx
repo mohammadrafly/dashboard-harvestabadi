@@ -25,15 +25,16 @@ const Table = ({ data, columns, onEdit, onDelete }) => {
 
     const filteredData = useMemo(() => {
         let filtered = data.filter((row) =>
-            columns.some((column) =>
-                row[column.accessor].toString().toLowerCase().includes(search.toLowerCase())
-            )
+            columns.some((column) => {
+                const value = typeof column.accessor === 'function' ? column.accessor(row) : row[column.accessor];
+                return value.toString().toLowerCase().includes(search.toLowerCase());
+            })
         );
 
         if (sortField) {
             filtered = filtered.sort((a, b) => {
-                const aValue = a[sortField];
-                const bValue = b[sortField];
+                const aValue = typeof sortField === 'function' ? sortField(a) : a[sortField];
+                const bValue = typeof sortField === 'function' ? sortField(b) : b[sortField];
                 return sortOrder === 'asc' ? (aValue > bValue ? 1 : -1) : (aValue < bValue ? 1 : -1);
             });
         }
@@ -73,7 +74,7 @@ const Table = ({ data, columns, onEdit, onDelete }) => {
                         <tr className="bg-blue-600 text-white text-left text-xs md:text-sm">
                             {columns.map((column) => (
                                 <th
-                                    key={column.accessor}
+                                    key={column.accessor.toString()}
                                     onClick={() => handleSort(column.accessor)}
                                     className="border-b border-gray-300 p-2 cursor-pointer hover:bg-blue-500 transition-colors duration-200"
                                 >
@@ -95,20 +96,20 @@ const Table = ({ data, columns, onEdit, onDelete }) => {
                                 className={`hover:bg-gray-100 transition-colors duration-200 ${rowIndex % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
                             >
                                 {columns.map((column) => (
-                                    <td key={column.accessor} className="border-b border-gray-200 p-2 text-gray-800">
-                                        {row[column.accessor]}
+                                    <td key={column.accessor.toString()} className="border-b border-gray-200 p-2 text-gray-800">
+                                        {typeof column.accessor === 'function' ? column.accessor(row) : row[column.accessor]}
                                     </td>
                                 ))}
                                 <td className="border-b border-gray-200 p-2 text-gray-800 text-center">
                                     <div className="flex flex-col sm:flex-row sm:space-x-2 lg:justify-center">
-                                        <button 
-                                            onClick={() => onEdit(row)} 
+                                        <button
+                                            onClick={() => onEdit(row)}
                                             className="bg-blue-600 text-white px-2 py-1 rounded-md hover:bg-blue-500 transition-colors duration-200 md:px-3 md:py-1.5"
                                         >
                                             Edit
                                         </button>
-                                        <button 
-                                            onClick={() => onDelete(row.id)} 
+                                        <button
+                                            onClick={() => onDelete(row.id)}
                                             className="mt-2 sm:mt-0 bg-red-600 text-white px-2 py-1 rounded-md hover:bg-red-500 transition-colors duration-200 md:px-3 md:py-1.5"
                                         >
                                             Delete

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { login } from '../services/authService';
+import { login, verifyToken } from '../services/authService';
 import { useLocation, Navigate } from 'react-router-dom';
 import AuthLayout from '../layouts/AuthLayout';
 
@@ -15,6 +15,17 @@ const Login = () => {
   const [countdown, setCountdown] = useState(3000);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      verifyToken(token)
+        .then(() => {
+          setIsLoggedIn(true);
+        })
+        .catch(() => {
+          localStorage.removeItem('token');
+        });
+    }
+
     if (errorMessage) {
       const interval = setInterval(() => {
         setCountdown((prevCountdown) => Math.max(prevCountdown - 100, 0));
