@@ -40,7 +40,7 @@ const Sidebar = ({ isOpen }) => {
             </ul>
 
             <div className="absolute bottom-0 left-0 p-5 w-full">
-                <ProfileIcon email={'admin@gmail.com'} />
+                <ProfileIcon/>
             </div>
         </div>
     );
