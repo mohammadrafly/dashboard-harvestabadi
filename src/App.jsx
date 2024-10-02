@@ -13,6 +13,7 @@ import EditProject from './pages/project/EditProject';
 import DesignsPage from './pages/DesignPage';
 import AddDesign from './pages/design/AddDesign';
 import EditDesign from './pages/design/EditDesign';
+import Settings from './pages/Setting';
 
 const App = () => {
   return (
@@ -38,6 +39,8 @@ const App = () => {
           <Route path="designs/edit/:id" element={<EditDesign />} />
 
           <Route path="profile/:email" element={<Profile />} />
+
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
     </Router>
