@@ -1,18 +1,15 @@
 import React from 'react';
-//import { FaUsers, FaProjectDiagram } from 'react-icons/fa';
-//import { MdOutlineArticle } from 'react-icons/md';
-import DashboardLayout from '../layouts/DashboardLayout';
 
-const Home = () => {
+const Home = ({ isDarkMode }) => {
     return (
-        <DashboardLayout title={'Home'}>
-            <main className="p-6">
+        <div className={`min-h-screen p-6 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+            <main>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    Welcome back!
+                    <h1 className="text-2xl md:text-3xl font-bold">Welcome back!</h1>
+                    {/* Additional content can be added here */}
                 </div>
             </main>
-        </DashboardLayout>
-
+        </div>
     );
 };
 

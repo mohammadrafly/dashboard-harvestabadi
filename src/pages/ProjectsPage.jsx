@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import Table from '../components/Table';
-import DashboardLayout from '../layouts/DashboardLayout';
 import { fetchProjects, deleteProject } from '../services/projectService';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-const ProjectsPage = () => {
+const ProjectsPage = ({ isDarkMode }) => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -75,37 +74,35 @@ const ProjectsPage = () => {
     ];
 
     return (
-        <DashboardLayout title={'Projects'}>
-            <main className="p-4 md:p-6">
-                <h1 className="text-2xl md:text-3xl font-bold mb-4">Projects</h1>
+        <div className={`min-h-screen p-4 md:p-6 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+            <h1 className="text-2xl md:text-3xl font-bold mb-4">Projects</h1>
 
-                <button
-                    onClick={() => navigate('/dashboard/projects/add')}
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 flex items-center"
-                >
-                    <FiPlus className="mr-2" />
-                    Add Project
-                </button>
+            <button
+                onClick={() => navigate('/dashboard/projects/add')}
+                className="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 flex items-center"
+            >
+                <FiPlus className="mr-2" />
+                Add Project
+            </button>
 
-                {loading ? (
-                    <p>Loading projects...</p>
-                ) : error ? (
-                    <p className="text-red-500">{error}</p>
-                ) : (
-                    <div className="overflow-x-auto">
-                        {successMessage && (
-                            <p className="text-green-500 mb-4">{successMessage}</p>
-                        )}
-                        <Table
-                            data={projects}
-                            columns={columns}
-                            onEdit={handleEdit}
-                            onDelete={handleDelete}
-                        />
-                    </div>
-                )}
-            </main>
-        </DashboardLayout>
+            {loading ? (
+                <p>Loading projects...</p>
+            ) : error ? (
+                <p className="text-red-500">{error}</p>
+            ) : (
+                <div className="overflow-x-auto">
+                    {successMessage && (
+                        <p className="text-green-500 mb-4">{successMessage}</p>
+                    )}
+                    <Table
+                        data={projects}
+                        columns={columns}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                    />
+                </div>
+            )}
+        </div>
     );
 };
 

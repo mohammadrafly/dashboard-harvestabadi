@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BiHomeAlt } from 'react-icons/bi';
 import { MdOutlineArticle, MdOutlineDesignServices } from 'react-icons/md';
 import { FaProjectDiagram } from 'react-icons/fa';
@@ -7,9 +7,24 @@ import { FiSettings } from 'react-icons/fi';
 import ProfileIcon from '../../components/ProfileIcon';
 
 const Sidebar = ({ isOpen }) => {
+    const location = useLocation();
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+    const links = [
+        { path: '/dashboard/home', label: 'Dashboard', icon: <BiHomeAlt size={24} /> },
+        { path: '/dashboard/blog', label: 'Blog', icon: <MdOutlineArticle size={24} /> },
+        { path: '/dashboard/projects', label: 'Projects', icon: <FaProjectDiagram size={24} /> },
+        { path: '/dashboard/designs', label: 'Design Inspiration', icon: <MdOutlineDesignServices size={24} /> },
+        { path: '/dashboard/settings', label: 'Settings', icon: <FiSettings size={24} /> },
+    ];
+
+    const isActive = (path) => {
+        return location.pathname === path || location.pathname.startsWith(path + '/');
+    };
+
     return (
         <div
-            className={`bg-[#00C2FF] text-white fixed top-0 h-full transition-all duration-300 ${isOpen ? 'w-64 md:w-80' : 'w-0'}`}
+            className={`${isDarkMode ? 'bg-gray-900 text-white' : 'bg-[#00C2FF] text-white'} fixed top-0 h-full transition-all duration-300 ${isOpen ? 'w-64 md:w-80' : 'w-0'}`}
             style={{ overflow: 'hidden' }}
         >
             <div className="p-4 lg:text-4xl text-3xl text-center">
@@ -19,37 +34,20 @@ const Sidebar = ({ isOpen }) => {
                     </h1>
                 </Link>
             </div>
+
             <ul className="mt-7 cursor-pointer text-lg">
-                <Link to="/dashboard/home">
-                    <li className="flex items-center py-2 px-4 hover:text-yellow-400">
-                        <BiHomeAlt className="mr-4" />
-                        Dashboard
-                    </li>
-                </Link>
-                <Link to="/dashboard/blog">
-                    <li className="flex items-center py-2 px-4 hover:text-yellow-400">
-                        <MdOutlineArticle className="mr-4" />
-                        Blog
-                    </li>
-                </Link>
-                <Link to="/dashboard/projects">
-                    <li className="flex items-center py-2 px-4 hover:text-yellow-400">
-                        <FaProjectDiagram className="mr-4" />
-                        Projects
-                    </li>
-                </Link>
-                <Link to="/dashboard/designs">
-                    <li className="flex items-center py-2 px-4 hover:text-yellow-400">
-                        <MdOutlineDesignServices className="mr-4" />
-                        Design Inspiration
-                    </li>
-                </Link>
-                <Link to="/dashboard/settings">
-                    <li className="flex items-center py-2 px-4 hover:text-yellow-400">
-                        <FiSettings className="mr-4" />
-                        Settings
-                    </li>
-                </Link>
+                {links.map(({ path, label, icon }) => (
+                    <Link to={path} key={path}>
+                        <li
+                            className={`flex items-center py-2 px-4 rounded-lg transition-colors duration-300
+                            ${isActive(path) ? 'bg-blue-600 text-yellow-400' : 'hover:bg-blue-200'}
+                            ${isActive(path) ? 'shadow-lg' : ''}`}
+                        >
+                            <span className="mr-4">{icon}</span>
+                            {label}
+                        </li>
+                    </Link>
+                ))}
             </ul>
 
             <div className="absolute bottom-0 left-0 p-5 w-full">

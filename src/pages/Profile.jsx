@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { verifyToken, updateUserProfile, updateUserPassword } from '../services/authService';
-import DashboardLayout from '../layouts/DashboardLayout';
 
-const Profile = () => {
+const Profile = ({ isDarkMode }) => {
     const { email } = useParams();
     const [userData, setUserData] = useState(null);
     const [error, setError] = useState(null);
@@ -12,7 +11,7 @@ const Profile = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [message, setMessage] = useState({ text: '', type: '' }); // Updated state to include type
+    const [message, setMessage] = useState({ text: '', type: '' });
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -75,7 +74,7 @@ const Profile = () => {
             }
         } catch (error) {
             if (error.response && error.response.data) {
-              setMessage({ text: error.response.message, type: 'error' });
+                setMessage({ text: error.response.message, type: 'error' });
             } else {
                 setMessage({ text: 'Failed to update password.', type: 'error' });
             }
@@ -83,87 +82,89 @@ const Profile = () => {
     };
 
     return (
-        <DashboardLayout title={'Profile'}>
-            <div className="container mx-auto p-4">
-                <h1 className="text-2xl font-bold mb-4">Profile</h1>
-                {error && <p className="text-red-500">{error}</p>}
-                {loading ? (
-                    <p>Loading...</p>
-                ) : (
-                    <div>
-                        <div className="bg-white shadow-md rounded-lg p-4 mb-6">
-                            <h2 className="text-xl font-semibold mb-2">User Information</h2>
-                            <form onSubmit={handleProfileUpdate}>
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium text-gray-700" htmlFor="name">Name</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium text-gray-700" htmlFor="email">Email</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        value={userData.email}
-                                        readOnly
-                                        className="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-gray-100"
-                                    />
-                                </div>
-                                <button type="submit" className="w-full bg-blue-500 text-white rounded-md py-2">Update Profile</button>
-                            </form>
-                        </div>
-
-                        <div className="bg-white shadow-md rounded-lg p-4">
-                            <h2 className="text-xl font-semibold mb-2">Change Password</h2>
-                            {message.text && (
-                                <p className={`mt-2 ${message.type === 'error' ? 'text-red-500' : 'text-green-500'}`}>
-                                    {message.text}
-                                </p>
-                            )}
-                            <form onSubmit={handlePasswordUpdate}>
-                                <div>
-                                    <label className="block mb-1">Current Password</label>
-                                    <input
-                                        type="password"
-                                        value={currentPassword}
-                                        onChange={(e) => setCurrentPassword(e.target.value)}
-                                        className="border rounded w-full px-3 py-2"
-                                        required
-                                    />
-                                </div>
-                                <div className="mt-4">
-                                    <label className="block mb-1">New Password</label>
-                                    <input
-                                        type="password"
-                                        value={newPassword}
-                                        onChange={(e) => setNewPassword(e.target.value)}
-                                        className="border rounded w-full px-3 py-2"
-                                        required
-                                    />
-                                </div>
-                                <div className="mt-4 mb-4">
-                                    <label className="block mb-1">Confirm New Password</label>
-                                    <input
-                                        type="password"
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        className="border rounded w-full px-3 py-2"
-                                        required
-                                    />
-                                </div>
-                                <button type="submit" className="w-full bg-blue-500 text-white rounded-md py-2">Change Password</button>
-                            </form>
-                        </div>
+        <div className={`container mx-auto p-4 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+            <h1 className="text-2xl font-bold mb-4">Profile</h1>
+            {error && <p className="text-red-500">{error}</p>}
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <div>
+                    <div className={`shadow-md rounded-lg p-4 mb-6 ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}>
+                        <h2 className="text-xl font-semibold mb-2">User Information</h2>
+                        <form onSubmit={handleProfileUpdate}>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700" htmlFor="name">Name</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className={`mt-1 block w-full border border-gray-300 rounded-md p-2 ${isDarkMode ? 'bg-gray-800 text-white placeholder-gray-400' : 'bg-white text-black placeholder-gray-400'}`}
+                                    placeholder="Enter your name"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700" htmlFor="email">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    value={userData.email}
+                                    readOnly
+                                    className={`mt-1 block w-full border border-gray-400 rounded-md p-2 ${isDarkMode ? 'bg-gray-800 text-gray-400' : 'bg-white text-black'}`}
+                                />
+                            </div>
+                            <button type="submit" className="w-full bg-blue-500 text-white rounded-md py-2">Update Profile</button>
+                        </form>
                     </div>
-                )}
-            </div>
-        </DashboardLayout>
+
+                    <div className={`shadow-md rounded-lg p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}>
+                        <h2 className="text-xl font-semibold mb-2">Change Password</h2>
+                        {message.text && (
+                            <p className={`mt-2 ${message.type === 'error' ? 'text-red-500' : 'text-green-500'}`}>
+                                {message.text}
+                            </p>
+                        )}
+                        <form onSubmit={handlePasswordUpdate}>
+                            <div>
+                                <label className="block mb-1">Current Password</label>
+                                <input
+                                    type="password"
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                    className={`border rounded w-full px-3 py-2 ${isDarkMode ? 'bg-gray-800 text-white placeholder-gray-400' : 'bg-white text-black placeholder-gray-400'}`}
+                                    placeholder="Enter current password"
+                                    required
+                                />
+                            </div>
+                            <div className="mt-4">
+                                <label className="block mb-1">New Password</label>
+                                <input
+                                    type="password"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    className={`border rounded w-full px-3 py-2 ${isDarkMode ? 'bg-gray-800 text-white placeholder-gray-400' : 'bg-white text-black placeholder-gray-400'}`}
+                                    placeholder="Enter new password"
+                                    required
+                                />
+                            </div>
+                            <div className="mt-4 mb-4">
+                                <label className="block mb-1">Confirm New Password</label>
+                                <input
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className={`border rounded w-full px-3 py-2 ${isDarkMode ? 'bg-gray-800 text-white placeholder-gray-400' : 'bg-white text-black placeholder-gray-400'}`}
+                                    placeholder="Confirm new password"
+                                    required
+                                />
+                            </div>
+                            <button type="submit" className="w-full bg-blue-500 text-white rounded-md py-2">Change Password</button>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 };
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchDesignById, updateDesign } from '../../services/designService';
-import DashboardLayout from '../../layouts/DashboardLayout';
 
 const EditDesign = () => {
     const { id } = useParams();
@@ -50,35 +49,34 @@ const EditDesign = () => {
         }
     };
 
-    return (
-        <DashboardLayout>
-            <div className="p-4 md:p-8">
-                <h1 className="text-3xl font-semibold text-gray-800 mb-6">Edit Design</h1>
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
+    return (
+        <div className={`min-h-screen p-4 md:p-8 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
+            <h1 className="text-3xl font-semibold mb-6">Edit Design</h1>
+            <form onSubmit={handleSubmit} className="space-y-6">
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
+                <div>
+                    <label className="block text-sm font-semibold mb-2">Link</label>
+                    <input
+                        type="text"
+                        value={link}
+                        onChange={(e) => setLink(e.target.value)}
+                        required
+                        placeholder="Enter the design link" // Add your placeholder text here
+                        className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
+                    />
+                </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Link</label>
-                        <input
-                            type="text"
-                            value={link}
-                            onChange={(e) => setLink(e.target.value)}
-                            required
-                            className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        className="mt-5 w-full py-3 px-4 bg-blue-500 text-white font-bold rounded-md shadow-md hover:bg-blue-600 transition duration-300"
-                    >
-                        Update Design
-                    </button>
-                </form>
-            </div>
-        </DashboardLayout>
+                <button
+                    type="submit"
+                    className="mt-5 w-full py-3 px-4 bg-blue-500 text-white font-bold rounded-md shadow-md hover:bg-blue-600 transition duration-300"
+                >
+                    Update Design
+                </button>
+            </form>
+        </div>
     );
 };
 

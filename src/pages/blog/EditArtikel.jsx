@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { updateArticle, fetchArticleById } from '../../services/postService';
-import DashboardLayout from '../../layouts/DashboardLayout';
 
 const EditArticle = () => {
     const [title, setTitle] = useState('');
@@ -93,69 +92,69 @@ const EditArticle = () => {
         }
     };
 
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
     return (
-        <DashboardLayout>
-            <div className="p-4 md:p-8">
-                <h1 className="text-3xl font-semibold text-gray-800 mb-6">Edit Article</h1>
+        <div className={`min-h-screen p-4 md:p-8 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
+            <h1 className="text-3xl font-semibold mb-6">Edit Article</h1>
 
-                {error && <p className="text-red-500 mb-4">{error}</p>}
-                {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
+            {error && <p className="text-red-500 mb-4">{error}</p>}
+            {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
 
-                <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Title</label>
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={handleTitleChange}
-                            required
-                            className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                    </div>
+            <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
+                <div>
+                    <label className="block text-sm font-semibold mb-2">Title</label>
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={handleTitleChange}
+                        required
+                        className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
+                    />
+                </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Image</label>
-                        <input
-                            type="file"
-                            onChange={handleImageChange}
-                            className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                        {imagePreview && (
-                            <div className="mt-4">
-                                <p className="text-sm text-gray-600">Image Preview:</p>
-                                <img src={imagePreview} alt="preview" className="mt-2 w-40 h-40 object-cover rounded-md shadow-sm" />
-                            </div>
-                        )}
-                    </div>
+                <div>
+                    <label className="block text-sm font-semibold mb-2">Image</label>
+                    <input
+                        type="file"
+                        onChange={handleImageChange}
+                        className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
+                    />
+                    {imagePreview && (
+                        <div className="mt-4">
+                            <p className="text-sm">Image Preview:</p>
+                            <img src={imagePreview} alt="preview" className="mt-2 w-40 h-40 object-cover rounded-md shadow-sm" />
+                        </div>
+                    )}
+                </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Slug</label>
-                        <input
-                            type="text"
-                            value={slug}
-                            readOnly
-                            className="w-full p-3 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                    </div>
+                <div>
+                    <label className="block text-sm font-semibold mb-2">Slug</label>
+                    <input
+                        type="text"
+                        value={slug}
+                        readOnly
+                        className={`w-full p-3 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
+                    />
+                </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Content</label>
-                        <ReactQuill
-                            value={content}
-                            onChange={setContent}
-                            className="h-fit bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                    </div>
+                <div>
+                    <label className="block text-sm font-semibold mb-2">Content</label>
+                    <ReactQuill
+                        value={content}
+                        onChange={setContent}
+                        className={`h-fit ${isDarkMode ? 'bg-white text-black' : 'bg-white text-black'} rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400`}
+                    />
+                </div>
 
-                    <button
-                        type="submit"
-                        className="mt-5 w-full py-3 px-4 bg-blue-500 text-white font-bold rounded-md shadow-md hover:bg-blue-600 transition duration-300"
-                    >
-                        Update Article
-                    </button>
-                </form>
-            </div>
-        </DashboardLayout>
+                <button
+                    type="submit"
+                    className="mt-5 w-full py-3 px-4 bg-blue-500 text-white font-bold rounded-md shadow-md hover:bg-blue-600 transition duration-300"
+                >
+                    Update Article
+                </button>
+            </form>
+        </div>
     );
 };
 
