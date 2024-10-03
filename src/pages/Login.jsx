@@ -139,7 +139,7 @@ const Login = () => {
                         </button>
                     </form>
                 </div>
-                <div className={`hidden w-1/2 md:flex items-center justify-center bg-cover bg-center ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
+                <div className={`hidden w-1/2 md:flex items-center justify-center bg-cover bg-center ${isDarkMode ? 'bg-gray-800' : 'bg-[#00C2FF]'}`}>
                     <img src="images/loginimg.png" alt=""></img>
                 </div>
             </div>

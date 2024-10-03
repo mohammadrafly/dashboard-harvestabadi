@@ -4,5 +4,4 @@ const API_URL = process.env.NODE_ENV === 'production'
 
 const STORAGE_URL = process.env.REACT_APP_STORAGE_URL_DEV
 
-console.log(API_URL);
 export { API_URL, STORAGE_URL };
