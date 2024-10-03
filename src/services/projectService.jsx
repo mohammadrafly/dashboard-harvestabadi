@@ -1,11 +1,9 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:8000/api/v1/dashboard/';
-//const API_URL = 'https://api.harvestabadi.com/api/v1/dashboard/';
+import { API_URL } from '../config/config';
 
 export const fetchProjects = async (token) => {
     try {
-        const response = await axios.get(`${API_URL}projects`, {
+        const response = await axios.get(`${API_URL}dashboard/projects`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -18,7 +16,7 @@ export const fetchProjects = async (token) => {
 
 export const fetchProjectById = async (id, token) => {
     try {
-        const response = await axios.get(`${API_URL}projects/${id}`, {
+        const response = await axios.get(`${API_URL}dashboard/projects/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -31,7 +29,7 @@ export const fetchProjectById = async (id, token) => {
 
 export const addProject = async (projectData, token) => {
     try {
-        const response = await axios.post(`${API_URL}projects`, projectData, {
+        const response = await axios.post(`${API_URL}dashboard/projects`, projectData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -44,7 +42,7 @@ export const addProject = async (projectData, token) => {
 
 export const updateProject = async (id, projectData, token) => {
     try {
-        const response = await axios.post(`${API_URL}projects/${id}`, projectData, {
+        const response = await axios.post(`${API_URL}dashboard/projects/${id}`, projectData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -57,7 +55,7 @@ export const updateProject = async (id, projectData, token) => {
 
 export const deleteProject = async (id, token) => {
     try {
-        const response = await axios.delete(`${API_URL}projects/${id}`, {
+        const response = await axios.delete(`${API_URL}dashboard/projects/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

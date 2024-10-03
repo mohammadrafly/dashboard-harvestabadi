@@ -14,7 +14,10 @@ import DesignsPage from './pages/DesignPage';
 import AddDesign from './pages/design/AddDesign';
 import EditDesign from './pages/design/EditDesign';
 import Settings from './pages/Setting';
-import DashboardLayout from './layouts/DashboardLayout'; // Ensure you import this
+import DashboardLayout from './layouts/DashboardLayout';
+import ServicePage from './pages/ServicePage';
+import AddService from './pages/service/AddService';
+import EditService from './pages/service/EditService';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
@@ -48,15 +51,23 @@ const App = () => {
             >
               <Route index element={<Navigate to="home" />} />
               <Route path="home" element={<Home isDarkMode={isDarkMode} />} />
+
               <Route path="blog" element={<BlogPage isDarkMode={isDarkMode} />} />
               <Route path="blog/add" element={<AddArticle />} />
               <Route path="blog/edit/:id" element={<EditArticle />} />
+
               <Route path="projects" element={<ProjectsPage isDarkMode={isDarkMode} />} />
               <Route path="projects/add" element={<AddProject />} />
               <Route path="projects/edit/:id" element={<EditProject />} />
+
               <Route path="designs" element={<DesignsPage isDarkMode={isDarkMode} />} />
               <Route path="designs/add" element={<AddDesign />} />
               <Route path="designs/edit/:id" element={<EditDesign />} />
+
+              <Route path="services" element={<ServicePage isDarkMode={isDarkMode} />} />
+              <Route path="services/add" element={<AddService />} />
+              <Route path="services/edit/:id" element={<EditService />} />
+
               <Route path="profile/:email" element={<Profile isDarkMode={isDarkMode} />} />
               <Route path="settings" element={<Settings isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
             </Route>

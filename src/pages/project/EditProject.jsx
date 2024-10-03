@@ -47,7 +47,7 @@ const EditProject = () => {
                 setSlug(project.slug);
                 setLink(project.link);
                 setContent(project.content);
-                setImagePreview(`${process.env.REACT_APP_API_URL}/storage/${project.image}`);
+                setImagePreview(`${process.env.REACT_APP_STORAGE_URL}/storage/${project.image}`);
             } catch (error) {
                 console.error('Error fetching project:', error);
                 setError('Failed to load project details.');
@@ -104,7 +104,6 @@ const EditProject = () => {
                         value={name}
                         onChange={handleNameChange}
                         required
-                        placeholder="Enter project name" // Add your placeholder text here
                         className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
                     />
                 </div>
@@ -141,7 +140,6 @@ const EditProject = () => {
                         value={link}
                         onChange={(e) => setLink(e.target.value)}
                         required
-                        placeholder="Enter project link" // Add your placeholder text here
                         className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
                     />
                 </div>

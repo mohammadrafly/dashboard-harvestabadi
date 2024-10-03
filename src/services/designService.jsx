@@ -1,11 +1,9 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:8000/api/v1/dashboard/';
-//const API_URL = 'https://api.harvestabadi.com/api/v1/dashboard/';
+import { API_URL } from '../config/config';
 
 export const fetchDesigns = async (token) => {
     try {
-        const response = await axios.get(`${API_URL}designs`, {
+        const response = await axios.get(`${API_URL}dashboard/designs`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -19,7 +17,7 @@ export const fetchDesigns = async (token) => {
 
 export const deleteDesign = async (designId, token) => {
     try {
-        const response = await axios.delete(`${API_URL}designs/${designId}`, {
+        const response = await axios.delete(`${API_URL}dashboard/designs/${designId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -33,7 +31,7 @@ export const deleteDesign = async (designId, token) => {
 
 export const createDesign = async (data, token) => {
   try {
-      const response = await axios.post(`${API_URL}designs`, data, {
+      const response = await axios.post(`${API_URL}dashboard/designs`, data, {
           headers: {
               Authorization: `Bearer ${token}`,
           },
@@ -47,7 +45,7 @@ export const createDesign = async (data, token) => {
 
 export const fetchDesignById = async (designId, token) => {
   try {
-      const response = await axios.get(`${API_URL}designs/${designId}`, {
+      const response = await axios.get(`${API_URL}dashboard/designs/${designId}`, {
           headers: {
               Authorization: `Bearer ${token}`,
           },
@@ -61,7 +59,7 @@ export const fetchDesignById = async (designId, token) => {
 
 export const updateDesign = async (designId, data, token) => {
   try {
-      const response = await axios.post(`${API_URL}designs/${designId}`, data, {
+      const response = await axios.post(`${API_URL}dashboard/designs/${designId}`, data, {
           headers: {
               Authorization: `Bearer ${token}`,
           },

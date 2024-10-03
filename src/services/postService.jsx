@@ -1,11 +1,9 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:8000/api/v1/dashboard/';
-//const API_URL = 'https://api.harvestabadi.com/api/v1/dashboard/';
+import { API_URL } from '../config/config';
 
 export const fetchArticles = async (token) => {
     try {
-        const response = await axios.get(`${API_URL}artikels`, {
+        const response = await axios.get(`${API_URL}dashboard/artikels`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -18,7 +16,7 @@ export const fetchArticles = async (token) => {
 
 export const deleteArticle = async (articleId, token) => {
   try {
-      const response = await axios.delete(`${API_URL}artikels/${articleId}`, {
+      const response = await axios.delete(`${API_URL}dashboard/artikels/${articleId}`, {
           headers: {
               Authorization: `Bearer ${token}`,
           },
@@ -32,7 +30,7 @@ export const deleteArticle = async (articleId, token) => {
 
 export const addArticle = async (articleData, token) => {
   try {
-      const response = await axios.post(`${API_URL}artikels`, articleData, {
+      const response = await axios.post(`${API_URL}dashboard/artikels`, articleData, {
           headers: {
               Authorization: `Bearer ${token}`,
           },
@@ -45,7 +43,7 @@ export const addArticle = async (articleData, token) => {
 
 export const fetchArticleById = async (id, token) => {
     try {
-        const response = await axios.get(`${API_URL}artikels/${id}`, {
+        const response = await axios.get(`${API_URL}dashboard/artikels/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;
@@ -56,7 +54,7 @@ export const fetchArticleById = async (id, token) => {
 
 export const updateArticle = async (id, articleData, token) => {
     try {
-        const response = await axios.post(`${API_URL}artikels/${id}`, articleData, {
+        const response = await axios.post(`${API_URL}dashboard/artikels/${id}`, articleData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

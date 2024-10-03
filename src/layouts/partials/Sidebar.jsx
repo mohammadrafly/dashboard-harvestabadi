@@ -15,6 +15,7 @@ const Sidebar = ({ isOpen }) => {
         { path: '/dashboard/blog', label: 'Blog', icon: <MdOutlineArticle size={24} /> },
         { path: '/dashboard/projects', label: 'Projects', icon: <FaProjectDiagram size={24} /> },
         { path: '/dashboard/designs', label: 'Design Inspiration', icon: <MdOutlineDesignServices size={24} /> },
+        { path: '/dashboard/services', label: 'Services', icon: <MdOutlineDesignServices size={24} /> }, // Added Services link
         { path: '/dashboard/settings', label: 'Settings', icon: <FiSettings size={24} /> },
     ];
 
@@ -35,12 +36,12 @@ const Sidebar = ({ isOpen }) => {
                 </Link>
             </div>
 
-            <ul className="mt-7 cursor-pointer text-lg">
+            <ul className="mt-7 cursor-pointer text-lg px-4">
                 {links.map(({ path, label, icon }) => (
                     <Link to={path} key={path}>
                         <li
-                            className={`flex items-center py-2 px-4 rounded-lg transition-colors duration-300
-                            ${isActive(path) ? 'bg-blue-600 text-yellow-400' : 'hover:bg-blue-200'}
+                            className={`flex items-center py-2 my-2 px-4 rounded-lg transition-colors duration-300
+                            ${isActive(path) ? 'bg-blue-600 text-white' : 'hover:bg-blue-200'}
                             ${isActive(path) ? 'shadow-lg' : ''}`}
                         >
                             <span className="mr-4">{icon}</span>

@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:8000/api/v1/';
-//const API_URL = 'https://api.harvestabadi.com/api/v1/';
+import { API_URL } from '../config/config';
 
 export const login = async (email, password) => {
   const response = await axios.post(`${API_URL}auth/login`, {
