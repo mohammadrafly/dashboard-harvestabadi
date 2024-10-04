@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { saveWhatsAppNumber, getWhatsAppNumber } from '../services/settingService';
+import { saveWhatsAppNumber, getWhatsAppNumber, getFeaturedImage, saveFeaturedImage } from '../services/settingService';
+import { STORAGE_URL } from '../config/config';
 
 const Settings = ({ isDarkMode, toggleDarkMode }) => {
     const [whatsAppNumber, setWhatsAppNumber] = useState('');
+    const [featuredImage, setFeaturedImage] = useState(null);
     const [message, setMessage] = useState({ text: '', type: '' });
     const token = localStorage.getItem('token');
+    const placeholderImage = 'https://via.placeholder.com/150';
 
     useEffect(() => {
-        const fetchWhatsAppNumber = async () => {
+        const fetchSettings = async () => {
             try {
-                const response = await getWhatsAppNumber(token);
-                const number = response.data.whatsAppNumber;
+                const [whatsAppResponse, featuredImageResponse] = await Promise.all([
+                    getWhatsAppNumber(token),
+                    getFeaturedImage(token),
+                ]);
+
+                const number = whatsAppResponse.data.whatsAppNumber;
                 setWhatsAppNumber(number.startsWith('62') ? number : number.replace('+62', ''));
+                setFeaturedImage(featuredImageResponse.data.featuredImage);
             } catch (error) {
-                console.error('Failed to fetch WhatsApp number', error);
-                setMessage({ text: 'Could not retrieve WhatsApp number. Try again later.', type: 'error' });
+                console.error('Failed to fetch settings', error);
+                setMessage({ text: 'Could not retrieve settings. Try again later.', type: 'error' });
             }
         };
 
-        fetchWhatsAppNumber();
+        fetchSettings();
     }, [token]);
 
     const handleWhatsAppUpdate = async (e) => {
@@ -30,6 +38,21 @@ const Settings = ({ isDarkMode, toggleDarkMode }) => {
         } catch (error) {
             console.error('Failed to update WhatsApp number', error);
             setMessage({ text: 'Could not update WhatsApp number. Please try again.', type: 'error' });
+        }
+    };
+
+    const handleFeaturedImageUpdate = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('featuredImage', e.target.files[0]);
+
+        try {
+            const response = await saveFeaturedImage(token, formData);
+            setFeaturedImage(response.data.featuredImage);
+            setMessage({ text: 'Featured image updated!', type: 'success' });
+        } catch (error) {
+            console.error('Failed to update featured image', error);
+            setMessage({ text: 'Could not update featured image. Please try again.', type: 'error' });
         }
     };
 
@@ -84,6 +107,23 @@ const Settings = ({ isDarkMode, toggleDarkMode }) => {
                         Update Number
                     </button>
                 </form>
+
+                {/* Featured Image Input */}
+                <h2 className="text-xl font-semibold mt-6 mb-2">Featured Image</h2>
+
+                <div className="mb-4">
+                    <img
+                        src={`${STORAGE_URL}${featuredImage}`|| placeholderImage}
+                        alt="Featured"
+                        className="w-1/2 h-1/2 object-cover rounded-md mb-4"
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFeaturedImageUpdate}
+                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    />
+                </div>
             </div>
         </div>
     );

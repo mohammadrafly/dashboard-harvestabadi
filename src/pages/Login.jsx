@@ -94,7 +94,7 @@ const Login = () => {
                         )}
 
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                            <label htmlFor="email" className={`block text-sm font-medium ${isDarkMode ? 'text-white' :'text-gray-700'}`}>Email</label>
                             <input
                                 type="email"
                                 id="email"
@@ -107,7 +107,7 @@ const Login = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                            <label htmlFor="password" className={`block text-sm font-medium ${isDarkMode ? 'text-white' :'text-gray-700'}`}>Password</label>
                             <input
                                 type={showPassword ? "text" : "password"}
                                 id="password"
@@ -139,7 +139,7 @@ const Login = () => {
                         </button>
                     </form>
                 </div>
-                <div className={`hidden w-1/2 md:flex items-center justify-center bg-cover bg-center ${isDarkMode ? 'bg-gray-800' : 'bg-[#00C2FF]'}`}>
+                <div className={`hidden w-1/2 md:flex items-center justify-center bg-cover bg-center bg-[#00C2FF]`}>
                     <img src="images/loginimg.png" alt=""></img>
                 </div>
             </div>
