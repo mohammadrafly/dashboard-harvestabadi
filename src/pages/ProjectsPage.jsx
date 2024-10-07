@@ -63,8 +63,8 @@ const ProjectsPage = ({ isDarkMode }) => {
         },
         { Header: 'Link', accessor: 'link' },
         {
-            Header: 'Content',
-            accessor: 'content',
+            Header: 'Title',  // Updated from 'Content' to 'Title'
+            accessor: 'title',  // Updated from 'content' to 'title'
             Cell: ({ value }) => <p>{value.length > 100 ? `${value.slice(0, 100)}...` : value}</p>
         },
         {

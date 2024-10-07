@@ -78,7 +78,6 @@ const Settings = ({ isDarkMode, toggleDarkMode }) => {
                     </label>
                 </div>
 
-                {/* WhatsApp Number Input */}
                 <h2 className="text-xl font-semibold mb-2">WhatsApp</h2>
 
                 {message.text && (
@@ -108,7 +107,6 @@ const Settings = ({ isDarkMode, toggleDarkMode }) => {
                     </button>
                 </form>
 
-                {/* Featured Image Input */}
                 <h2 className="text-xl font-semibold mt-6 mb-2">Featured Image</h2>
 
                 <div className="mb-4">

@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import { addProject } from '../../services/projectService';
 
 const AddProject = () => {
-    const [name, setName] = useState('');
+    const [title, setTitle] = useState(''); // Title field
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
     const [slug, setSlug] = useState('');
     const [link, setLink] = useState('');
-    const [content, setContent] = useState('');
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
-    const generateSlug = (name) => {
-        return name
+    const generateSlug = (title) => {
+        return title
             .toLowerCase()
             .replace(/\s+/g, '-')
             .replace(/[^\w\\-]+/g, '')
@@ -25,10 +22,10 @@ const AddProject = () => {
             .replace(/^-+|-+$/g, '');
     };
 
-    const handleNameChange = (e) => {
-        const newName = e.target.value;
-        setName(newName);
-        setSlug(generateSlug(newName));
+    const handleTitleChange = (e) => {
+        const newTitle = e.target.value;
+        setTitle(newTitle);
+        setSlug(generateSlug(newTitle));
     };
 
     const handleImageChange = (e) => {
@@ -45,7 +42,7 @@ const AddProject = () => {
         const formData = new FormData();
         formData.append('slug', slug);
         formData.append('link', link);
-        formData.append('content', content);
+        formData.append('title', title);
 
         if (image) {
             formData.append('image', image);
@@ -55,11 +52,10 @@ const AddProject = () => {
             const response = await addProject(formData, token);
             if (response.status === 'success') {
                 setSuccessMessage('Project added successfully!');
-                setName('');
+                setTitle('');
                 setImage(null);
                 setSlug('');
                 setLink('');
-                setContent('');
                 setImagePreview('');
                 setTimeout(() => {
                     navigate('/dashboard/projects');
@@ -87,10 +83,10 @@ const AddProject = () => {
                     <label className="block text-sm font-semibold mb-2">Project Name</label>
                     <input
                         type="text"
-                        value={name}
-                        onChange={handleNameChange}
+                        value={title}
+                        onChange={handleTitleChange}
                         required
-                        placeholder="Enter project name"
+                        placeholder="Enter project title"
                         className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
                     />
                 </div>
@@ -130,15 +126,6 @@ const AddProject = () => {
                         required
                         placeholder="Enter project link"
                         className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-semibold mb-2">Content</label>
-                    <ReactQuill
-                        value={content}
-                        onChange={setContent}
-                        className={`h-fit ${isDarkMode ? 'bg-white text-black' : 'bg-white text-black'} rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400`}
                     />
                 </div>
 

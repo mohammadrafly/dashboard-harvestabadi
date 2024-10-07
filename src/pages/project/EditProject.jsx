@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import { fetchProjectById, updateProject } from '../../services/projectService';
 
 const EditProject = () => {
     const { id } = useParams();
-    const [name, setName] = useState('');
+    const [title, setTitle] = useState('');
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
     const [slug, setSlug] = useState('');
     const [link, setLink] = useState('');
-    const [content, setContent] = useState('');
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
-    const generateSlug = (name) => {
-        return name
+    const generateSlug = (title) => {
+        return title
             .toLowerCase()
             .replace(/\s+/g, '-')
             .replace(/[^\w\\-]+/g, '')
@@ -26,10 +23,10 @@ const EditProject = () => {
             .replace(/^-+|-+$/g, '');
     };
 
-    const handleNameChange = (e) => {
-        const newName = e.target.value;
-        setName(newName);
-        setSlug(generateSlug(newName));
+    const handleTitleChange = (e) => {
+        const newTitle = e.target.value;
+        setTitle(newTitle);
+        setSlug(generateSlug(newTitle));
     };
 
     const handleImageChange = (e) => {
@@ -43,10 +40,9 @@ const EditProject = () => {
             try {
                 const response = await fetchProjectById(id, token);
                 const project = response.data;
-                setName(project.slug);
+                setTitle(project.title);
                 setSlug(project.slug);
                 setLink(project.link);
-                setContent(project.content);
                 setImagePreview(`${process.env.REACT_APP_STORAGE_URL}/storage/${project.image}`);
             } catch (error) {
                 console.error('Error fetching project:', error);
@@ -65,7 +61,7 @@ const EditProject = () => {
         formData.append('_method', 'PUT');
         formData.append('slug', slug);
         formData.append('link', link);
-        formData.append('content', content);
+        formData.append('title', title);
 
         if (image) {
             formData.append('image', image);
@@ -101,8 +97,8 @@ const EditProject = () => {
                     <label className="block text-sm font-semibold mb-2">Project Name</label>
                     <input
                         type="text"
-                        value={name}
-                        onChange={handleNameChange}
+                        value={title}
+                        onChange={handleTitleChange}
                         required
                         className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
                     />
@@ -141,15 +137,6 @@ const EditProject = () => {
                         onChange={(e) => setLink(e.target.value)}
                         required
                         className={`w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-semibold mb-2">Content</label>
-                    <ReactQuill
-                        value={content}
-                        onChange={setContent}
-                        className={`h-fit ${isDarkMode ? 'bg-white text-black' : 'bg-white text-black'} rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400`}
                     />
                 </div>
 
