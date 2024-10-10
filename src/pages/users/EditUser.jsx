@@ -1,4 +1,3 @@
-// components/EditUser.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchUserById, updateUser } from '../../services/usersService';
@@ -38,7 +37,7 @@ const EditUser = () => {
             if (response.status === 'success') {
                 setSuccessMessage('User updated successfully!');
                 setTimeout(() => {
-                    navigate('/users');
+                    navigate('/dashboard/users');
                 }, 2000);
             } else {
                 throw new Error('Failed to update user');
@@ -48,8 +47,10 @@ const EditUser = () => {
         }
     };
 
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
     return (
-        <div className="min-h-screen p-4 md:p-8">
+        <div className={`min-h-screen p-4 md:p-8 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
             <h1 className="text-3xl font-semibold mb-6">Edit User</h1>
 
             {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -63,7 +64,9 @@ const EditUser = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md"
+                        placeholder="Enter name"
+                        className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400
+                            ${isDarkMode ? 'bg-gray-700 text-white placeholder-white' : 'bg-white text-black placeholder-gray-500'}`}
                     />
                 </div>
                 <div>
@@ -73,12 +76,14 @@ const EditUser = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md"
+                        placeholder="Enter email"
+                        className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400
+                            ${isDarkMode ? 'bg-gray-700 text-white placeholder-white' : 'bg-white text-black placeholder-gray-500'}`}
                     />
                 </div>
                 <button
                     type="submit"
-                    className="mt-5 w-full py-3 px-4 bg-blue-500 text-white font-bold rounded-md"
+                    className="mt-5 w-full py-3 px-4 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition duration-300"
                 >
                     Update User
                 </button>

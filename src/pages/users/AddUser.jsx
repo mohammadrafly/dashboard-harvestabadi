@@ -1,4 +1,3 @@
-// components/AddUser.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUser } from '../../services/usersService';
@@ -34,7 +33,7 @@ const AddUser = () => {
             if (response.status === 'success') {
                 setSuccessMessage('User added successfully!');
                 setTimeout(() => {
-                    navigate('/users');
+                    navigate('/dashboard/users');
                 }, 2000);
             } else {
                 throw new Error('Failed to add user');
@@ -44,8 +43,10 @@ const AddUser = () => {
         }
     };
 
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
     return (
-        <div className="min-h-screen p-4 md:p-8">
+        <div className={`min-h-screen p-4 md:p-8 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
             <h1 className="text-3xl font-semibold mb-6">Add New User</h1>
 
             {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -59,7 +60,9 @@ const AddUser = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md"
+                        placeholder="Enter name"
+                        className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400
+                            ${isDarkMode ? 'bg-gray-700 text-white placeholder-white' : 'bg-white text-black placeholder-gray-500'}`}
                     />
                 </div>
                 <div>
@@ -69,7 +72,9 @@ const AddUser = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md"
+                        placeholder="Enter email"
+                        className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400
+                            ${isDarkMode ? 'bg-gray-700 text-white placeholder-white' : 'bg-white text-black placeholder-gray-500'}`}
                     />
                 </div>
                 <div>
@@ -79,7 +84,9 @@ const AddUser = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md"
+                        placeholder="Enter password"
+                        className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400
+                            ${isDarkMode ? 'bg-gray-700 text-white placeholder-white' : 'bg-white text-black placeholder-gray-500'}`}
                     />
                 </div>
                 <div>
@@ -89,12 +96,14 @@ const AddUser = () => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
-                        className="w-full p-3 border border-gray-300 rounded-md"
+                        placeholder="Confirm password"
+                        className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400
+                            ${isDarkMode ? 'bg-gray-700 text-white placeholder-white' : 'bg-white text-black placeholder-gray-500'}`}
                     />
                 </div>
                 <button
                     type="submit"
-                    className="mt-5 w-full py-3 px-4 bg-blue-500 text-white font-bold rounded-md"
+                    className="mt-5 w-full py-3 px-4 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition duration-300"
                 >
                     Add User
                 </button>
