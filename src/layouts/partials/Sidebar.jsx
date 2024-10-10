@@ -15,7 +15,8 @@ const Sidebar = ({ isOpen }) => {
         { path: '/dashboard/blog', label: 'Blog', icon: <MdOutlineArticle size={24} /> },
         { path: '/dashboard/projects', label: 'Projects', icon: <FaProjectDiagram size={24} /> },
         { path: '/dashboard/designs', label: 'Design Inspiration', icon: <MdOutlineDesignServices size={24} /> },
-        { path: '/dashboard/services', label: 'Services', icon: <MdOutlineDesignServices size={24} /> }, // Added Services link
+        { path: '/dashboard/services', label: 'Services', icon: <MdOutlineDesignServices size={24} /> }, // Services link
+        { path: '/dashboard/users', label: 'Users', icon: <MdOutlineDesignServices size={24} /> }, // Added Users link
         { path: '/dashboard/settings', label: 'Settings', icon: <FiSettings size={24} /> },
     ];
 

@@ -18,6 +18,9 @@ import DashboardLayout from './layouts/DashboardLayout';
 import ServicePage from './pages/ServicePage';
 import AddService from './pages/service/AddService';
 import EditService from './pages/service/EditService';
+import AddUser from './pages/users/AddUser';
+import EditUser from './pages/users/EditUser';
+import UserPage from './pages/UserPage';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
@@ -55,6 +58,10 @@ const App = () => {
               <Route path="blog" element={<BlogPage isDarkMode={isDarkMode} />} />
               <Route path="blog/add" element={<AddArticle />} />
               <Route path="blog/edit/:id" element={<EditArticle />} />
+
+              <Route path="users" element={<UserPage isDarkMode={isDarkMode} />} />
+              <Route path="users/add" element={<AddUser />} />
+              <Route path="users/edit/:id" element={<EditUser />} />
 
               <Route path="projects" element={<ProjectsPage isDarkMode={isDarkMode} />} />
               <Route path="projects/add" element={<AddProject />} />
